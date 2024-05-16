@@ -9,7 +9,7 @@ module ucsbece152a_counter #(
 parameter WIDTH = 3
 ) (
 input logic clk,
-input logic rst,
+input logic rst, 
 output logic [WIDTH-1:0] count_o,
 // part 2
 input logic enable_i,
@@ -20,7 +20,15 @@ always_ff@(posedge clk or posedge rst) begin
 	if(rst == 1'b1)begin //Note that a reset signal needs to be sent to the counter to give it an initial value
 		count_o = 0; 
 	end else begin
-		count_o = count_o + 1; 
+		if(enable_i == 1'b1)begin
+			if(dir_i == 1'b0)begin
+				count_o = count_o + 1; 
+			end else begin
+				count_o = count_o - 1; 
+			end
+		end else begin
+			count_o = count_o;
+		end	
 	end
 end
 endmodule
